@@ -8,11 +8,13 @@
   </div>
 </div>
 
-<h2>Appointments</h2>
+<h2>Upcoming Appointments</h2>
 
-<% if @vet.appointments.any? %>
+<% upcoming_appointments = @vet.appointments.upcoming %>
+
+<% if upcoming_appointments.any? %>
   <ul class="list-group">
-    <% @vet.appointments.each do |appointment| %>
+    <% upcoming_appointments.each do |appointment| %>
       <li class="list-group-item">
         <%= link_to format_datetime(appointment.date), appointment_path(appointment) %>
         - <%= appointment.pet.name %>
@@ -20,5 +22,5 @@
     <% end %>
   </ul>
 <% else %>
-  <p>This vet has no appointments.</p>
+  <p>This vet has no upcoming appointments.</p>
 <% end %>

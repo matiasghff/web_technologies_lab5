@@ -1,14 +1,8 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# This file should ensure the existence of records required to run the application in every environment
+# (production, development, test). The code here should be idempotent so that it can be executed at
+# any point in every environment. The data can then be loaded with the bin/rails db:seed command
+# (or created alongside the database with db:setup).
 
-# para no duplicar si corro seeds denuevo
 Treatment.destroy_all
 Appointment.destroy_all
 Pet.destroy_all
@@ -43,7 +37,7 @@ owner3 = Owner.create!(
 # Pets
 pet1 = owner1.pets.create!(
   name: "Rocky",
-  species: "Dog",
+  species: "dog",
   breed: "Labrador",
   date_of_birth: Date.new(2020, 5, 10),
   weight: 28.5
@@ -51,7 +45,7 @@ pet1 = owner1.pets.create!(
 
 pet2 = owner1.pets.create!(
   name: "Milo",
-  species: "Cat",
+  species: "cat",
   breed: "Siamese",
   date_of_birth: Date.new(2021, 8, 15),
   weight: 4.2
@@ -59,7 +53,7 @@ pet2 = owner1.pets.create!(
 
 pet3 = owner2.pets.create!(
   name: "Luna",
-  species: "Dog",
+  species: "dog",
   breed: "Beagle",
   date_of_birth: Date.new(2019, 3, 20),
   weight: 12.8
@@ -67,7 +61,7 @@ pet3 = owner2.pets.create!(
 
 pet4 = owner2.pets.create!(
   name: "Coco",
-  species: "Rabbit",
+  species: "rabbit",
   breed: "Mini Lop",
   date_of_birth: Date.new(2022, 1, 5),
   weight: 2.3
@@ -75,7 +69,7 @@ pet4 = owner2.pets.create!(
 
 pet5 = owner3.pets.create!(
   name: "Nala",
-  species: "Cat",
+  species: "cat",
   breed: "Persian",
   date_of_birth: Date.new(2018, 11, 30),
   weight: 5.0
@@ -104,7 +98,7 @@ appointment1 = Appointment.create!(
   vet: vet1,
   date: DateTime.new(2026, 4, 15, 10, 0, 0),
   reason: "Annual checkup",
-  status: 0
+  status: :scheduled
 )
 
 appointment2 = Appointment.create!(
@@ -112,31 +106,31 @@ appointment2 = Appointment.create!(
   vet: vet1,
   date: DateTime.new(2026, 4, 16, 11, 30, 0),
   reason: "Skin irritation",
-  status: 1
+  status: :in_progress
 )
 
 appointment3 = Appointment.create!(
   pet: pet3,
   vet: vet2,
-  date: DateTime.new(2026, 4, 17, 9, 0, 0),
+  date: DateTime.new(2026, 5, 17, 9, 0, 0),
   reason: "Dental cleaning",
-  status: 2
+  status: :completed
 )
 
 appointment4 = Appointment.create!(
   pet: pet4,
   vet: vet1,
-  date: DateTime.new(2026, 4, 18, 14, 0, 0),
+  date: DateTime.new(2026, 5, 18, 14, 0, 0),
   reason: "Digestive issues",
-  status: 2
+  status: :completed
 )
 
 appointment5 = Appointment.create!(
   pet: pet5,
   vet: vet2,
-  date: DateTime.new(2026, 4, 19, 16, 0, 0),
+  date: DateTime.new(2026, 5, 19, 16, 0, 0),
   reason: "Vaccination",
-  status: 3
+  status: :cancelled
 )
 
 # Treatments

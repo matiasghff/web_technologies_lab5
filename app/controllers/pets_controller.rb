@@ -4,6 +4,6 @@ class PetsController < ApplicationController
   end
 
   def show
-    @pet = Pet.find(params[:id])
+    @pet = Pet.includes(:owner, :appointments).find(params[:id])
   end
 end

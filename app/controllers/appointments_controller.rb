@@ -4,6 +4,6 @@ class AppointmentsController < ApplicationController
   end
 
   def show
-    @appointment = Appointment.find(params[:id])
+    @appointment = Appointment.includes(:pet, :vet, :treatments).find(params[:id])
   end
 end
