@@ -1,26 +1,40 @@
-<h1 class="mb-4"><%= @vet.first_name %> <%= @vet.last_name %></h1>
+<div class="row g-4">
+  <div class="col-12 col-lg-4">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h1 class="h3 mb-3"><%= @vet.first_name %> <%= @vet.last_name %></h1>
+        <p class="mb-2"><strong>Email:</strong><br><span class="text-muted"><%= @vet.email %></span></p>
+        <p class="mb-2"><strong>Phone:</strong><br><span class="text-muted"><%= @vet.phone %></span></p>
+        <p class="mb-0"><strong>Specialization:</strong><br><span class="text-muted"><%= @vet.specialization %></span></p>
+      </div>
+    </div>
+  </div>
 
-<div class="card mb-4">
-  <div class="card-body">
-    <p><strong>Email:</strong> <%= @vet.email %></p>
-    <p><strong>Phone:</strong> <%= @vet.phone %></p>
-    <p><strong>Specialization:</strong> <%= @vet.specialization %></p>
+  <div class="col-12 col-lg-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <h2 class="h4 mb-3">Upcoming Appointments</h2>
+
+        <% upcoming_appointments = @vet.appointments.upcoming %>
+
+        <% if upcoming_appointments.any? %>
+          <div class="list-group list-group-flush">
+            <% upcoming_appointments.each do |appointment| %>
+              <%= link_to appointment_path(appointment), class: "list-group-item list-group-item-action px-0" do %>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="fw-semibold"><%= format_datetime(appointment.date) %></div>
+                    <small class="text-muted"><%= appointment.pet.name %></small>
+                  </div>
+                  <span class="text-primary">View</span>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-muted mb-0">This vet has no upcoming appointments.</p>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
-
-<h2>Upcoming Appointments</h2>
-
-<% upcoming_appointments = @vet.appointments.upcoming %>
-
-<% if upcoming_appointments.any? %>
-  <ul class="list-group">
-    <% upcoming_appointments.each do |appointment| %>
-      <li class="list-group-item">
-        <%= link_to format_datetime(appointment.date), appointment_path(appointment) %>
-        - <%= appointment.pet.name %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>This vet has no upcoming appointments.</p>
-<% end %>

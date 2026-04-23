@@ -1,31 +1,46 @@
-<h1 class="mb-4"><%= @pet.name %></h1>
+<div class="row g-4">
+  <div class="col-12 col-lg-4">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h1 class="h3 mb-3"><%= @pet.name %></h1>
 
-<div class="card mb-4">
-  <div class="card-body">
-    <p><strong>Species:</strong> <%= @pet.species %></p>
-    <p><strong>Breed:</strong> <%= @pet.breed %></p>
-    <p><strong>Date of Birth:</strong> <%= format_date(@pet.date_of_birth) %></p>
-    <p><strong>Weight:</strong> <%= @pet.weight %></p>
-    <p>
-      <strong>Owner:</strong>
-      <%= link_to "#{@pet.owner.first_name} #{@pet.owner.last_name}", owner_path(@pet.owner) %>
-    </p>
+        <p class="mb-2"><strong>Species:</strong><br><span class="text-muted"><%= @pet.species.capitalize %></span></p>
+        <p class="mb-2"><strong>Breed:</strong><br><span class="text-muted"><%= @pet.breed %></span></p>
+        <p class="mb-2"><strong>Date of Birth:</strong><br><span class="text-muted"><%= format_date(@pet.date_of_birth) %></span></p>
+        <p class="mb-2"><strong>Weight:</strong><br><span class="text-muted"><%= @pet.weight %> kg</span></p>
+        <p class="mb-0">
+          <strong>Owner:</strong><br>
+          <%= link_to "#{@pet.owner.first_name} #{@pet.owner.last_name}", owner_path(@pet.owner), class: "text-decoration-none" %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <h2 class="h4 mb-3">Upcoming Appointments</h2>
+
+        <% upcoming_appointments = @pet.appointments.upcoming %>
+
+        <% if upcoming_appointments.any? %>
+          <div class="list-group list-group-flush">
+            <% upcoming_appointments.each do |appointment| %>
+              <%= link_to appointment_path(appointment), class: "list-group-item list-group-item-action px-0" do %>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="fw-semibold"><%= format_datetime(appointment.date) %></div>
+                    <small class="text-muted"><%= human_status(appointment.status) %></small>
+                  </div>
+                  <span class="text-primary">View</span>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-muted mb-0">This pet has no upcoming appointments.</p>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
-
-<h2>Upcoming Appointments</h2>
-
-<% upcoming_appointments = @pet.appointments.upcoming %>
-
-<% if upcoming_appointments.any? %>
-  <ul class="list-group">
-    <% upcoming_appointments.each do |appointment| %>
-      <li class="list-group-item">
-        <%= link_to format_datetime(appointment.date), appointment_path(appointment) %>
-        - <%= human_status(appointment.status) %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>This pet has no upcoming appointments.</p>
-<% end %>

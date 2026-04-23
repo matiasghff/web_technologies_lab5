@@ -1,23 +1,41 @@
-<h1 class="mb-4"><%= @owner.first_name %> <%= @owner.last_name %></h1>
+<div class="row g-4">
+  <div class="col-12 col-lg-4">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h1 class="h3 mb-3"><%= @owner.first_name %> <%= @owner.last_name %></h1>
+        <p class="mb-2"><strong>Email:</strong><br><span class="text-muted"><%= @owner.email %></span></p>
+        <p class="mb-2"><strong>Phone:</strong><br><span class="text-muted"><%= @owner.phone %></span></p>
+        <p class="mb-0"><strong>Address:</strong><br><span class="text-muted"><%= @owner.address %></span></p>
+      </div>
+    </div>
+  </div>
 
-<div class="card mb-4">
-  <div class="card-body">
-    <p><strong>Email:</strong> <%= @owner.email %></p>
-    <p><strong>Phone:</strong> <%= @owner.phone %></p>
-    <p><strong>Address:</strong> <%= @owner.address %></p>
+  <div class="col-12 col-lg-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h4 mb-0">Pets</h2>
+          <span class="badge bg-primary-subtle text-primary"><%= @owner.pets.count %> total</span>
+        </div>
+
+        <% if @owner.pets.any? %>
+          <div class="list-group list-group-flush">
+            <% @owner.pets.each do |pet| %>
+              <%= link_to pet_path(pet), class: "list-group-item list-group-item-action px-0" do %>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="fw-semibold"><%= pet.name %></div>
+                    <small class="text-muted"><%= pet.species.capitalize %> · <%= pet.breed %></small>
+                  </div>
+                  <span class="text-primary">View</span>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-muted mb-0">This owner has no pets.</p>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
-
-<h2>Pets</h2>
-
-<% if @owner.pets.any? %>
-  <ul class="list-group">
-    <% @owner.pets.each do |pet| %>
-      <li class="list-group-item">
-        <%= link_to pet.name, pet_path(pet) %> - <%= pet.species %> (<%= pet.breed %>)
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>This owner has no pets.</p>
-<% end %>

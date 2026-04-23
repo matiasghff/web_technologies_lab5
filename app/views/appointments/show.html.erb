@@ -1,46 +1,57 @@
-<h1 class="mb-4">Appointment Details</h1>
+<div class="row g-4">
+  <div class="col-12 col-lg-4">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h1 class="h3 mb-3">Appointment Details</h1>
+        <p class="mb-2"><strong>Date:</strong><br><span class="text-muted"><%= format_datetime(@appointment.date) %></span></p>
+        <p class="mb-2"><strong>Reason:</strong><br><span class="text-muted"><%= @appointment.reason %></span></p>
+        <p class="mb-2"><strong>Status:</strong><br><span class="text-muted"><%= human_status(@appointment.status) %></span></p>
+        <p class="mb-2">
+          <strong>Pet:</strong><br>
+          <%= link_to @appointment.pet.name, pet_path(@appointment.pet), class: "text-decoration-none" %>
+        </p>
+        <p class="mb-0">
+          <strong>Vet:</strong><br>
+          <%= link_to "#{@appointment.vet.first_name} #{@appointment.vet.last_name}", vet_path(@appointment.vet), class: "text-decoration-none" %>
+        </p>
+      </div>
+    </div>
+  </div>
 
-<div class="card mb-4">
-  <div class="card-body">
-    <p><strong>Date:</strong> <%= format_datetime(@appointment.date) %></p>
-    <p><strong>Reason:</strong> <%= @appointment.reason %></p>
-    <p><strong>Status:</strong> <%= human_status(@appointment.status) %></p>
-    <p>
-      <strong>Pet:</strong>
-      <%= link_to @appointment.pet.name, pet_path(@appointment.pet) %>
-    </p>
-    <p>
-      <strong>Vet:</strong>
-      <%= link_to "#{@appointment.vet.first_name} #{@appointment.vet.last_name}", vet_path(@appointment.vet) %>
-    </p>
+  <div class="col-12 col-lg-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <h2 class="h4 mb-3">Treatments</h2>
+
+        <% if @appointment.treatments.any? %>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Name</th>
+                  <th>Medication</th>
+                  <th>Dosage</th>
+                  <th>Administered At</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @appointment.treatments.each do |treatment| %>
+                  <tr>
+                    <td class="fw-semibold"><%= treatment.name %></td>
+                    <td><%= treatment.medication %></td>
+                    <td><%= treatment.dosage %></td>
+                    <td><%= format_datetime(treatment.administered_at) %></td>
+                    <td><%= treatment.notes %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <p class="text-muted mb-0">No treatments for this appointment.</p>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
-
-<h2>Treatments</h2>
-
-<% if @appointment.treatments.any? %>
-  <table class="table table-striped table-bordered">
-    <thead class="table-dark">
-      <tr>
-        <th>Name</th>
-        <th>Medication</th>
-        <th>Dosage</th>
-        <th>Administered At</th>
-        <th>Notes</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @appointment.treatments.each do |treatment| %>
-        <tr>
-          <td><%= treatment.name %></td>
-          <td><%= treatment.medication %></td>
-          <td><%= treatment.dosage %></td>
-          <td><%= format_datetime(treatment.administered_at) %></td>
-          <td><%= treatment.notes %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>No treatments for this appointment.</p>
-<% end %>
