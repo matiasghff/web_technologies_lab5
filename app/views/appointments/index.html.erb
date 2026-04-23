@@ -1,0 +1,24 @@
+<h1 class="mb-4">Appointments</h1>
+
+<table class="table table-striped table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th>Date</th>
+      <th>Pet Name</th>
+      <th>Vet Name</th>
+      <th>Reason</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @appointments.each do |appointment| %>
+      <tr>
+        <td><%= link_to format_datetime(appointment.date), appointment_path(appointment) %></td>
+        <td><%= appointment.pet.name %></td>
+        <td><%= "#{appointment.vet.first_name} #{appointment.vet.last_name}" %></td>
+        <td><%= appointment.reason %></td>
+        <td><%= human_status(appointment.status) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

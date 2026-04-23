@@ -1,0 +1,23 @@
+<h1 class="mb-4"><%= @owner.first_name %> <%= @owner.last_name %></h1>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <p><strong>Email:</strong> <%= @owner.email %></p>
+    <p><strong>Phone:</strong> <%= @owner.phone %></p>
+    <p><strong>Address:</strong> <%= @owner.address %></p>
+  </div>
+</div>
+
+<h2>Pets</h2>
+
+<% if @owner.pets.any? %>
+  <ul class="list-group">
+    <% @owner.pets.each do |pet| %>
+      <li class="list-group-item">
+        <%= link_to pet.name, pet_path(pet) %> - <%= pet.species %> (<%= pet.breed %>)
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>This owner has no pets.</p>
+<% end %>

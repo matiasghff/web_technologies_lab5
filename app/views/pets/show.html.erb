@@ -1,0 +1,29 @@
+<h1 class="mb-4"><%= @pet.name %></h1>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <p><strong>Species:</strong> <%= @pet.species %></p>
+    <p><strong>Breed:</strong> <%= @pet.breed %></p>
+    <p><strong>Date of Birth:</strong> <%= format_date(@pet.date_of_birth) %></p>
+    <p><strong>Weight:</strong> <%= @pet.weight %></p>
+    <p>
+      <strong>Owner:</strong>
+      <%= link_to "#{@pet.owner.first_name} #{@pet.owner.last_name}", owner_path(@pet.owner) %>
+    </p>
+  </div>
+</div>
+
+<h2>Appointments</h2>
+
+<% if @pet.appointments.any? %>
+  <ul class="list-group">
+    <% @pet.appointments.each do |appointment| %>
+      <li class="list-group-item">
+        <%= link_to format_datetime(appointment.date), appointment_path(appointment) %>
+        - <%= human_status(appointment.status) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>This pet has no appointments.</p>
+<% end %>

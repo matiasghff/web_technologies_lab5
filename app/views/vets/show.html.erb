@@ -1,0 +1,24 @@
+<h1 class="mb-4"><%= @vet.first_name %> <%= @vet.last_name %></h1>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <p><strong>Email:</strong> <%= @vet.email %></p>
+    <p><strong>Phone:</strong> <%= @vet.phone %></p>
+    <p><strong>Specialization:</strong> <%= @vet.specialization %></p>
+  </div>
+</div>
+
+<h2>Appointments</h2>
+
+<% if @vet.appointments.any? %>
+  <ul class="list-group">
+    <% @vet.appointments.each do |appointment| %>
+      <li class="list-group-item">
+        <%= link_to format_datetime(appointment.date), appointment_path(appointment) %>
+        - <%= appointment.pet.name %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>This vet has no appointments.</p>
+<% end %>
